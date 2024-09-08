@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Investment Portfolio</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&family=Roboto:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-attachment: fixed;
+        }
+
+        .container {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            max-width: 50%;
+            width: 100%;
+            text-align: center;
+            animation: fadeIn 1.5s ease-out forwards;
+            transform: translateY(50px);
+            opacity: 0;
+        }
+
+        @keyframes fadeIn {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2em;
+            margin-bottom: 20px;
+            color: #ffbf00;
+            animation: slideIn 1.2s ease-out forwards;
+            transform: translateY(-30px);
+            opacity: 0;
+        }
+
+        @keyframes slideIn {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        label {
+            display: block;
+            font-size: 1em;
+            margin-bottom: 10px;
+            color: #ddd;
+            text-align: left;
+            animation: fadeInText 1.8s ease-out forwards;
+            transform: translateX(-20px);
+            opacity: 0;
+        }
+
+        @keyframes fadeInText {
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        select, input, textarea, button {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #555;
+            border-radius: 10px;
+            font-size: 1em;
+            box-sizing: border-box;
+            outline: none;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+            background-color: #333;
+            color: #f5f5f5;
+        }
+
+        select:hover, textarea:hover, input:hover {
+            border-color: #ffbf00;
+            box-shadow: 0 0 12px rgba(224, 192, 151, 0.5);
+        }
+
+        button {
+            background-color: #ffbf00;
+            color: #333;
+            cursor: pointer;
+            border: none;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        button:hover {
+            background-color: #d4b488;
+            transform: scale(1.05);
+        }
+
+        textarea {
+            resize: none;
+            background-color: #444;
+        }
+
+        /* New CSS for side-by-side layout */
+        .flex-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .flex-item {
+            flex: 1;
+        }
+
+        /* Keep the last textarea (output1) full width */
+        .output-field {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Golden Cube</h1>
+        <form action="http://localhost:5002/" method="POST">
+            <label for="time">Select the time period</label>
+            <select name="time" id="time">
+                <option value="1 month" {% if time == '1 month' %}selected{% endif %}>1 month</option>
+                <option value="3 month" {% if time == '3 month' %}selected{% endif %}>3 month</option>
+                <option value="12 month" {% if time == '12 month' %}selected{% endif %}>12 month</option>
+                <option value="3 year" {% if time == '3 year' %}selected{% endif %}>3 year</option>
+                <option value="5 year" {% if time == '5 year' %}selected{% endif %}>5 year</option>
+            </select>
+
+            <label for="risk">Select risk factor (in percentage)</label>
+            <select name="risk" id="risk">
+                <option value="0-10" {% if risk == '0-10' %}selected{% endif %}>0-10</option>
+                <option value="10-20" {% if risk == '10-20' %}selected{% endif %}>10-20</option>
+                <option value="20-30" {% if risk == '20-30' %}selected{% endif %}>20-30</option>
+                <option value="30-40" {% if risk == '30-40' %}selected{% endif %}>30-40</option>
+                <option value="40-50" {% if risk == '40-50' %}selected{% endif %}>40-50</option>
+                <option value="50-60" {% if risk == '50-60' %}selected{% endif %}>50-60</option>
+                <option value="60-70" {% if risk == '60-70' %}selected{% endif %}>60-70</option>
+                <option value="70-80" {% if risk == '70-80' %}selected{% endif %}>70-80</option>
+                <option value="80-90" {% if risk == '80-90' %}selected{% endif %}>80-90</option>
+                <option value="90-100" {% if risk == '90-100' %}selected{% endif %}>90-100</option>
+            </select>
+
+            <label for="amount">Enter Amount</label>
+            <input type="number" name="amount" id="amount" value="{{ amount }}">
+
+            <!-- Flex container for side-by-side textareas -->
+            <div class="flex-container">
+                <textarea class="flex-item" name="query6" rows="2" cols="25">{{ percent1 }}</textarea>
+                <textarea class="flex-item" name="query6" rows="2" cols="25">{{ percent2 }}</textarea>
+            </div>
+
+            <div class="flex-container">
+                <textarea class="flex-item" name="query6" rows="2" cols="25">{{percent3 }}</textarea>
+                <textarea class="flex-item" name="query6" rows="2" cols="25">{{ percent4 }}</textarea>
+            </div>
+
+            <!-- Output field for optimal return at the bottom -->
+            <textarea class="output-field" name="query6" rows="2" cols="50">{{ output1 }}</textarea>
+
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</body>
+</html>
