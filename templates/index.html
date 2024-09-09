@@ -133,7 +133,7 @@
 <body>
     <div class="container">
         <h1>Golden Cube</h1>
-        <form action="http://localhost:5002/" method="POST">
+        <form action="/calculate" method="POST">
             <label for="time">Select the time period</label>
             <select name="time" id="time">
                 <option value="1 month" {% if time == '1 month' %}selected{% endif %}>1 month</option>
